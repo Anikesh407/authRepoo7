@@ -10,14 +10,14 @@ if(!token){
 }
 try {
   const payload=  jwt.verify(token,process.env.JWT_SECRET);
-if(!veri){
+if(!payload){
   return res.json({
     success:false,
     message:"token expired"
   })
 }
 req.user=payload;
-// req.user=veri;
+
 
 next();
 } catch (error) {
