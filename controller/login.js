@@ -4,20 +4,20 @@ import bcrypt from "bcrypt";
 export const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if(!email || !password){
-     return res.json({
-        success:false,
-        message:"fill correctly",
+    if (!email || !password) {
+      return res.json({
+        success: false,
+        message: "fill correctly",
       })
     }
-    const user = User.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.json({
         success: false,
         message: "user not found"
       })
     }
-    const check =await bcrypt.compare(password, user.password);
+    const check = await bcrypt.compare(password, user.password);
     if (!check) {
       return res.json({
         success: false,
@@ -35,7 +35,7 @@ export const userLogin = async (req, res) => {
     const token = jwt.sign(data, SECRET, { expiresIn: "1d" });
     res.cookie("token", token, {
       expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-      httponly: true,
+      httpOnly: true,
 
     }).status(200).json({
       success: true,

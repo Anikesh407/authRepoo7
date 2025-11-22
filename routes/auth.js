@@ -8,6 +8,6 @@ const routerAuth = express.Router();
 
 routerAuth.post("/register", UserCreate);
 routerAuth.post("/login", userLogin);
-// routerAuth.get("/except", protect, except);
+routerAuth.get("/except", protect, except);
 
 export default routerAuth;
